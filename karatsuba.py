@@ -1,6 +1,5 @@
 from math import ceil, floor
 
-
 def karatsuba_multiply(x: int, y: int, n: int, base: int) -> int:
     if n == 1: return x * y
     
