@@ -30,7 +30,7 @@ def strassen_multiply(A: np.ndarray, B: np.ndarray) -> np.ndarray:
     mat_size: int = max(*size_A, *size_B)
     
     if not is_power_of(2, mat_size): mat_size = get_next_power(2, mat_size)
-    n = mat_size
+    n: int = mat_size
     
     pad_A = (0, mat_size - size_A[0]), (0, mat_size - size_A[1])
     pad_B = (0, mat_size - size_B[0]), (0, mat_size - size_B[1])
