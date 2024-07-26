@@ -24,6 +24,8 @@ def strassen_multiply(A: np.ndarray, B: np.ndarray, n: int) -> np.ndarray:
     size_A = len(A), len(A[0])
     size_B = len(B), len(B[0])
     
+    size_result = size_A[0], size_B[1]
+    
     if size_A[1] != size_B[0]: raise Exception("Row length of A does not equal Column length of B")
     mat_size: int = max(*size_A, *size_B)
     
@@ -55,27 +57,6 @@ def strassen_multiply(A: np.ndarray, B: np.ndarray, n: int) -> np.ndarray:
     C22 = M1 - M2 + M3 + M6
     
     C1X, C2X = np.hstack((C11, C12)), np.hstack((C21, C22))
-    return np.vstack((C1X, C2X))
-    
-    
-arr1: np.ndarray = np.array(
-    [
-        [1, 2, 3],
-        [3, 2, 1],
-        [1, 2, 3],
-    ]
-)
-
-arr2: np.ndarray = np.array(
-    [
-        [4, 5, 6],
-        [6, 5, 4],
-        [4, 6, 5]
-    ]
-)
-
-# print(np.hstack((arr1, arr2)))
-
-print(strassen_multiply(arr1, arr2, 2))
+    return np.vstack((C1X, C2X))[0:size_result[0], 0:size_result[1]]
 
 
