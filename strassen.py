@@ -19,7 +19,7 @@ def get_next_power(base: int, value: int) -> int:
 
 
 
-def strassen_multiply(A: np.ndarray, B: np.ndarray, n: int) -> np.ndarray:
+def strassen_multiply(A: np.ndarray, B: np.ndarray) -> np.ndarray:
     
     size_A = len(A), len(A[0])
     size_B = len(B), len(B[0])
@@ -30,6 +30,7 @@ def strassen_multiply(A: np.ndarray, B: np.ndarray, n: int) -> np.ndarray:
     mat_size: int = max(*size_A, *size_B)
     
     if not is_power_of(2, mat_size): mat_size = get_next_power(2, mat_size)
+    n = mat_size
     
     pad_A = (0, mat_size - size_A[0]), (0, mat_size - size_A[1])
     pad_B = (0, mat_size - size_B[0]), (0, mat_size - size_B[1])
@@ -42,14 +43,14 @@ def strassen_multiply(A: np.ndarray, B: np.ndarray, n: int) -> np.ndarray:
     A11, A12, A21, A22 = grid_split(A)
     B11, B12, B21, B22 = grid_split(B)
     
-    M1 = strassen_multiply(A11 + A22, B11 + B22, n/2)
-    M2 = strassen_multiply(A21 + A22, B11, n/2)
-    M3 = strassen_multiply(A11, B12 - B22, n/2)
-    M4 = strassen_multiply(A22, B21 - B11, n/2)
-    M5 = strassen_multiply(A11 + A12, B22, n/2)
+    M1 = strassen_multiply(A11 + A22, B11 + B22)
+    M2 = strassen_multiply(A21 + A22, B11)
+    M3 = strassen_multiply(A11, B12 - B22)
+    M4 = strassen_multiply(A22, B21 - B11)
+    M5 = strassen_multiply(A11 + A12, B22)
     
-    M6 = strassen_multiply(A21 - A11, B11 + B12, n/2)
-    M7 = strassen_multiply(A12 - A22, B21 + B22, n/2)
+    M6 = strassen_multiply(A21 - A11, B11 + B12)
+    M7 = strassen_multiply(A12 - A22, B21 + B22)
     
     C11 = M1 + M4 - M5 + M7
     C12 = M3 + M5
